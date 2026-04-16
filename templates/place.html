@@ -1,20 +1,35 @@
 {% block content %}
-<h1>Места куда можно сходить</h1>
-{% for item in places%}
-<div class="col-md6 border rounded">
-    <h2>{{item.title}}</h2>
-    <div>
-        {{item.description}}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+  integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+  crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/place.css') }}" />
+  <title>Places in Cheboksary</title>
+</head>
+<body>
+  <h1 class="main">Места куда можно сходить в Чебоксарах</h1>
+  <div class="places">
+    {% for item in places%}
+    <div class="col-md6 border rounded">
+      <h2>{{item.title}}</h2>
+      {% if item.name_photo_main %}
+        <img class="single-photo" src="{{ url_for('static', filename='images/' + item.name_photo_main) }}" alt="Фото">
+      {% endif %}
+      <div><b>Описание места:</b> {{item.description}}</div>
+      <div><b>Категория места:</b> {{item.category}}</div>
+      <div><b>Часы работы:</b> {{item.opening_hours}}</div>
+      <div><b>Адрес места:</b> {{item.address}}</div>
+      <form action="/place" method="GET">
+        <input type="hidden" name="id" value="{{ item.id }}">
+        <button class="btn">Подробнее</button>
+      </form>
     </div>
-    <div>
-        Категория места: {{item.category}}
-    </div>
-    <div>
-        Часы работы: {{item.opening_hours}}
-    </div>
-    <div>
-        Адрес места: {{item.address}}
-    </div>
-</div>
-{% endfor %}
+    {% endfor %}
+  </div>
+</body>
+</html>
 {% endblock %}

@@ -1,0 +1,116 @@
+/* Для основного текста */
+.main {
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Для мест */
+.places {
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.places .col-md6 {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border: 1px solid #e0e0e0;
+}
+
+.places .col-md6 h2 {
+    color: #2c3e50;
+    margin-top: 0;
+    margin-bottom: 12px;
+    font-size: 1.5rem;
+}
+
+.places .col-md6 div {
+    margin: 8px 0;
+    line-height: 1.5;
+}
+
+.places .col-md6 div:not(:first-child) {
+    padding: 8px 0;
+    border-top: 1px solid #f0f0f0;
+}
+
+.places .col-md6 div:nth-child(3)::before {
+    font-weight: bold;
+}
+
+.places .col-md6 div:nth-child(4)::before {
+    font-weight: bold;
+}
+
+.places .col-md6 div:nth-child(5)::before {
+    font-weight: bold;
+}
+
+/* Для кнопки */
+.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 500;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #3498db;
+    color: white;
+}
+
+.btn:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Для двух фото */
+.photo-row {
+    display: flex;
+    gap: 15px;
+    margin: 20px 0;
+    flex-wrap: wrap; /* чтобы на мобильных переносились */
+}
+
+.photo-row img {
+    flex: 1;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 12px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+}
+
+.photo-row img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+}
+
+/* Для одного фото */
+.single-photo {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin: 20px 0;
+    transition: transform 0.3s;
+}
+
+.single-photo:hover {
+    transform: scale(1.01);
+}
