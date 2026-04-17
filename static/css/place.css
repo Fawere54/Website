@@ -79,12 +79,80 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.btn_reg {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #3498db;
+    color: white;
+}
+
+.btn_reg:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn_reg:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Кнопка "Назад" */
+.btn-back {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    color: #3498db;
+    background: white;
+    border: 1.5px solid #3498db;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 5px 12px;
+    border-radius: 10px;
+    margin: 10px 10px;
+}
+
+.btn-back:hover {
+    background-color: #3498db;
+    color: white;
+    transform: translateX(-2px);
+}
+
+.registration-card {
+    position: relative;
+}
+
+.registration-card h1 {
+    margin-top: 0;
+    padding-top: 10px;
+}
+
+/* Контейнер для основного текста с кнопкой */
+.header-cont {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
+}
+
 /* Для двух фото */
 .photo-row {
     display: flex;
     gap: 15px;
     margin: 20px 0;
-    flex-wrap: wrap; /* чтобы на мобильных переносились */
+    flex-wrap: wrap;
 }
 
 .photo-row img {
@@ -113,4 +181,197 @@
 
 .single-photo:hover {
     transform: scale(1.01);
+}
+
+/* Регистрация */
+/* Контейнер для всей страницы регистрации */
+.registration-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f5f7fa;
+    padding: 20px;
+}
+
+/* Карточка формы */
+.registration-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    padding: 40px;
+    width: 100%;
+    max-width: 500px;
+    transition: transform 0.2s;
+}
+
+/* Заголовок формы */
+.registration-card h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+    font-size: 28px;
+}
+
+/* Стили для полей ввода */
+.registration-card .form-control {
+    width: 100%;
+    padding: 14px 16px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    transition: border 0.2s, box-shadow 0.2s;
+    box-sizing: border-box;
+}
+
+/* Эффект при фокусе на поле */
+.registration-card .form-control:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+/* Подстроки */
+.registration-card label {
+    font-weight: 600;
+    margin-bottom: 8px;
+    display: block;
+    color: #2c3e50;
+}
+
+/* Отступы между полями */
+.registration-card p {
+    margin-bottom: 20px;
+}
+
+/* Кнопка регистрации */
+.registration-card .btn_reg {
+    display: inline-block;
+    width: 100%;
+    padding: 14px 24px;
+    font-size: 18px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #3498db;
+    color: white;
+    margin-top: 10px;
+}
+
+.registration-card .btn_reg:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.registration-card .btn_reg:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Сообщения об ошибках */
+.registration-card .alert {
+    padding: 10px 15px;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-top: 8px;
+    margin-bottom: 0;
+}
+
+.registration-card .alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Общее сообщение (message) */
+.registration-card .form-message {
+    text-align: center;
+    margin-top: 15px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+/* Ссылка для переключения между формами (Вход/Регистрация) */
+.auth-switch {
+    text-align: center;
+    margin-top: 20px;
+    padding-top: 15px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.auth-switch a {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.auth-switch a:hover {
+    color: #2980b9;
+    text-decoration: underline;
+    transform: translateX(2px);
+}
+
+/* Стиль для поля "Запомнить меня" */
+.checkbox-field {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checkbox-field label {
+    display: inline;
+    margin-bottom: 0;
+    font-weight: normal;
+}
+
+/* Кнопка выхода */
+.btn_logout {
+    display: inline-block;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    border: 2px solid #e74c3c;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: white;
+    color: #e74c3c;
+}
+
+.btn_logout:hover {
+    background-color: #e74c3c;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.btn_logout:active {
+    transform: translateY(0);
+}
+
+/* Контейнер для кнопок и имени */
+.auth-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Имя пользователя */
+.user-name {
+    font-weight: 600;
+    color: #2c3e50;
+    background-color: #ecf0f1;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
 }

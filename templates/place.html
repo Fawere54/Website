@@ -11,7 +11,17 @@
   <title>Places in Cheboksary</title>
 </head>
 <body>
-  <h1 class="main">Места куда можно сходить в Чебоксарах</h1>
+  <div class="header-cont">
+      <h1 class="main">Места куда можно сходить в Чебоксарах</h1>
+      <div class="auth-area">
+          {% if current_user.is_authenticated %}
+              <span class="user-name">{{ current_user.name }}</span>
+              <a href="{{ url_for('logout') }}" class="btn_logout">Выйти</a>
+          {% else %}
+              <a href="{{ url_for('login') }}" class="btn_reg">Войти</a>
+          {% endif %}
+      </div>
+  </div>
   <div class="places">
     {% for item in places%}
     <div class="col-md6 border rounded">
