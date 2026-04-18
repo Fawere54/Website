@@ -21,14 +21,14 @@ login_manager.login_view = 'login'
 def main():
     db_session.global_init("db/places.db")
     db_sess = db_session.create_session()
-    plac = db_sess.query(Places)
+    plac = db_sess.query(Places).all()
     return render_template("place.html", places=plac)
 
 
 @app.route('/place')
 def show_place():
+    db_session.global_init("db/places.db")
     place_id = request.args.get('id')
-    print(place_id)
 
     if not place_id:
         return "ID не указан", 400
@@ -38,6 +38,11 @@ def show_place():
     place = db_sess.query(Places).get(place_id)
     if int(tme) >= place.open_hour and int(tme) < place.close_hour:
         tr_tme = True
+    elif place.open_hour > place.close_hour:
+        if (int(tme) + 24 - place.open_hour) >= 0 and (int(tme) + 24 - place.open_hour) < (place.close_hour + 24 - place.open_hour):
+            tr_tme = True
+        else:
+            tr_tme = False
     else:
         tr_tme = False
 

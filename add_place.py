@@ -1,4 +1,3 @@
-
 from data.places import Places
 from data import db_session
 from flask import Flask
