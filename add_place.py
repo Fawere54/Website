@@ -1,4 +1,3 @@
-from scripts.regsetup import description
 
 from data.places import Places
 from data import db_session
@@ -26,9 +25,9 @@ def add():
     name_phot_2 = input("Напишите ТОЧНОЕ название 2-ого фото в папке static/images: ")
 
 
-    o = input("Точно хотите добавить? (да/нет): ")
+    o = input("Точно хотите добавить? (da/no): ")
 
-    if o.lower() == "да":
+    if o.lower() == "da":
         place = Places(
             title=name,
             description=dep,
