@@ -375,3 +375,95 @@
     border-radius: 20px;
     font-size: 14px;
 }
+
+/* Контейнер для кнопки сортировки */
+.sort-container {
+    position: relative;
+    margin-top: 10px;
+    text-align: right;
+}
+
+/* Кнопка сортировки */
+.btn-sort {
+    display: inline-block;
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    margin: 20px;
+}
+.btn-sort:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+/* Скрытый чекбокс */
+.sort-toggle {
+    display: none;
+}
+
+/* Выпадающее меню */
+.sort-menu {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: #fff;
+    min-width: 240px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    border-radius: 8px;
+    z-index: 10;
+    margin-top: 5px;
+    padding: 10px 0;
+}
+
+.sort-toggle:checked ~ .sort-menu {
+    display: block;
+}
+
+/* Группы пунктов */
+.sort-group {
+    padding: 8px 16px;
+    border-bottom: 1px solid #eee;
+}
+.sort-group:last-child {
+    border-bottom: none;
+}
+.sort-group strong {
+    display: block;
+    font-size: 14px;
+    color: #2c3e50;
+    margin-bottom: 8px;
+}
+.sort-group a {
+    display: block;
+    padding: 6px 0 6px 12px;
+    text-decoration: none;
+    color: #3498db;
+    font-size: 13px;
+    transition: 0.1s;
+}
+.sort-group a:hover {
+    background-color: #f0f7ff;
+    border-radius: 4px;
+    color: #1f618d;
+}
+
+/* Текст для сброса фильтра */
+.reset-group {
+    border-top: 1px solid #e0e0e0;
+    margin-top: 5px;
+    padding-top: 8px;
+}
+.reset-link {
+    color: #e74c3c !important;
+    font-weight: bold;
+    text-align: center;
+}
+.reset-link:hover {
+    background-color: #fdecea !important;
+}

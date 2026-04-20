@@ -21,8 +21,31 @@ login_manager.login_view = 'login'
 def main():
     db_session.global_init("db/places.db")
     db_sess = db_session.create_session()
-    plac = db_sess.query(Places).all()
-    return render_template("place.html", places=plac)
+    query = db_sess.query(Places)
+
+    filter_by = request.args.get('filter')
+    filter_value = request.args.get('value')
+    if filter_by == 'category' and filter_value:
+        query = query.filter(Places.category == filter_value)
+
+    sort_by = request.args.get('sort')
+    if sort_by == 'title_asc':
+        query = query.order_by(Places.title.asc())
+    elif sort_by == 'title_desc':
+        query = query.order_by(Places.title.desc())
+    elif sort_by == 'open_asc':
+        query = query.order_by(Places.open_hour.asc())
+    elif sort_by == 'open_desc':
+        query = query.order_by(Places.open_hour.desc())
+    elif sort_by == 'close_asc':
+        query = query.order_by(Places.close_hour.asc())
+    elif sort_by == 'close_desc':
+        query = query.order_by(Places.close_hour.desc())
+    else:
+        query = query.order_by(Places.id)
+
+    places = query.all()
+    return render_template('place.html', places=places)
 
 
 @app.route('/place')
