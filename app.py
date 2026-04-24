@@ -18,13 +18,6 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 
-@app.route('/profile')
-@login_required
-def profile():
-    db_sess = db_session.create_session()
-    return render_template('profile.html', user=current_user)
-
-
 @app.route('/')
 def main():
     db_sess = db_session.create_session()
