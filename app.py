@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect, url_for, request
 from flask_login import LoginManager, login_user, login_required, current_user, logout_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
@@ -8,6 +8,7 @@ from data.places import Places
 from data.users import User
 from forms.user import RegisterForm, LoginForm
 from datetime import datetime
+import json
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'qwerty_zcvbn'
@@ -19,7 +20,6 @@ login_manager.login_view = 'login'
 
 @app.route('/')
 def main():
-    db_session.global_init("db/places.db")
     db_sess = db_session.create_session()
     query = db_sess.query(Places)
 
@@ -50,7 +50,6 @@ def main():
 
 @app.route('/place')
 def show_place():
-    db_session.global_init("db/places.db")
     place_id = request.args.get('id')
 
     if not place_id:
@@ -74,10 +73,26 @@ def show_place():
 
     return render_template('places_details.html', place=place, tme=tr_tme)
 
+@app.route('/profile')
+@login_required
+def profile():
+    return render_template('profile.html', user=current_user, title='Мой профиль')
+
+
+@app.route('/like_place/<int:place_id>', methods=['POST'])
+@login_required
+def like_place(place_id):
+    liked = json.loads(current_user.liked_places) if current_user.liked_places else []
+    if place_id in liked:
+        liked.remove(place_id)
+    else:
+        liked.append(place_id)
+    current_user.liked_places = json.dumps(liked)
+    db.session.commit()
+    return redirect(request.referrer or url_for('main'))
 
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
-    db_session.global_init("db/places.db")
     form = RegisterForm()
     if form.validate_on_submit():
         if form.password.data != form.password_again.data:
@@ -96,13 +111,13 @@ def registration():
         user.set_password(form.password.data)
         db_sess.add(user)
         db_sess.commit()
+        login_user(user, remember=False)
         return redirect('/')
     return render_template('registration.html', title='Регистрация', form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    db_session.global_init("db/places.db")
     form = LoginForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
@@ -132,4 +147,5 @@ def logout():
 
 
 if __name__ == '__main__':
-    app.run(port=8080, host='127.0.0.1')
+    db_session.global_init("db/places.db")
+    app.run(port=8080, host='0.0.0.0')

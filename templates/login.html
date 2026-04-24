@@ -1,50 +1,45 @@
 {% block content %}
-<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-  integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
-  crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/place.css') }}" />
-  <title>Places in Cheboksary</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/auth.css') }}"/>
 </head>
-<body>
-<div class="registration-container">
-    <div class="registration-card">
-        <a href="/" class="btn-back"> ← Назад</a>
-        <h1>Вход</h1>
+
+<div class="auth-body">
+    <div class="login-box">
+        <a href="/" style="color: rgba(255,255,255,0.6); text-decoration: none;"> ← Назад</a>
+        <h1>Войти</h1>
         <form action="" method="post">
             {{ form.hidden_tag() }}
-            <p>
-                {{ form.email.label }}<br>
-                {{ form.email(class="form-control", type="email") }}<br>
-                {% for error in form.email.errors %}
-                    <p class="alert alert-danger" role="alert">{{ error }}</p>
-                {% endfor %}
-            </p>
-            <p>
-                {{ form.password.label }}<br>
-                {{ form.password(class="form-control", type="password") }}<br>
-                {% for error in form.password.errors %}
-                    <p class="alert alert-danger" role="alert">{{ error }}</p>
-                {% endfor %}
-            </p>
-            <p class="checkbox-field">
-                {{ form.remember_me() }}
-                {{ form.remember_me.label }}
-            </p>
-            <p>{{ form.submit(type="submit", class="btn_reg") }}</p>
-            {% if message %}
-                <div class="form-message">{{ message }}</div>
-            {% endif %}
+
+            <div class="input-group-custom">
+                <i class="fas fa-user"></i>
+                {{ form.email(placeholder="Email", autocomplete="off") }}
+            </div>
+            {% for error in form.email.errors %}
+            <small class="text-danger">{{ error }}</small>
+            {% endfor %}
+
+            <div class="input-group-custom">
+                <i class="fas fa-lock"></i>
+                {{ form.password(placeholder="Пароль") }}
+            </div>
+            {% for error in form.password.errors %}
+            <small class="text-danger">{{ error }}</small>
+            {% endfor %}
+
+            <div class="mb-3">
+                {{ form.remember_me() }} {{ form.remember_me.label(style="font-size: 14px") }}
+            </div>
+
+            {{ form.submit(class="login-btn") }}
         </form>
-        <div class="auth-switch">
-            <a href="{{ url_for('registration') }}">Нет аккаунта? Зарегистрироваться</a>
-        </div>
+
+        <p class="mt-4 text-center" style="font-size: 13px;">
+            Нет аккаунта? <a href="{{ url_for('registration') }}" style="color:
+            #38bdf8; text-decoration: none;">Зарегистрироваться</a>
+        </p>
     </div>
 </div>
-</body>
-</html>
 {% endblock %}

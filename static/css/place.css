@@ -1,3 +1,22 @@
+/* Адаптация карточки регистрации под телефон */
+@media (max-width: 576px) {
+    .registration-card {
+        padding: 20px;
+        margin: 10px;
+        border-radius: 15px;
+    }
+
+    .single-photo {
+        height: 300px;
+    }
+
+    .header-cont {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+}
+
 /* Для основного текста */
 .main {
     text-align: center;
@@ -50,6 +69,23 @@
 
 .places .col-md6 div:nth-child(5)::before {
     font-weight: bold;
+}
+
+/* Дополнительно для страницы профиля */
+.user-avatar {
+    background-color: #ecf0f1;
+    width: 80px;
+    height: 80px;
+    line-height: 80px;
+    border-radius: 50%;
+    margin: 0 auto;
+}
+
+.profile-info .form-control {
+    border: none;
+    border-bottom: 1.5px solid #3498db;
+    border-radius: 0;
+    padding-left: 0;
 }
 
 /* Для кнопки */
@@ -172,7 +208,7 @@
 /* Для одного фото */
 .single-photo {
     width: 100%;
-    height: 250px;
+    height: 500px;
     object-fit: cover;
     border-radius: 12px;
     margin: 20px 0;
