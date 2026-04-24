@@ -1,0 +1,34 @@
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+          crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/place.css') }}"/>
+    <title>Places in Cheboksary</title>
+</head>
+<body>
+<div class="profile-container">
+    <h1>Профиль пользователя {{ user.name }}</h1>
+    <p><strong>Email:</strong> {{ user.email }}</p>
+<!--    <h2>Избранные места</h2>-->
+<!--    <div class="places">-->
+<!--        {% for place in favorites %}-->
+<!--        <div class="col-md6 border rounded">-->
+<!--            <h3>{{ place.title }}</h3>-->
+<!--            <p>{{ place.description }}</p>-->
+<!--            <a href="/place/{{ place.id }}" class="btn">Подробнее</a>-->
+<!--            <a href="{{ url_for('remove_favorite', place_id=place.id) }}" class="btn-outline">Удалить из избранного</a>-->
+<!--        </div>-->
+<!--        {% else %}-->
+<!--        <p>У вас пока нет избранных мест.</p>-->
+<!--        {% endfor %}-->
+<!--    </div>-->
+    <a href="{{ url_for('logout') }}" class="btn-logout" style="margin-top: 20px;">Выйти</a>
+</div>
+</body>
+</html>
+{% endblock %}

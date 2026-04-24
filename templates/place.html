@@ -15,10 +15,10 @@
     <h1 class="main">Места куда можно сходить в Чебоксарах</h1>
     <div class="auth-area">
         {% if current_user.is_authenticated %}
-        <span class="user-name">{{ current_user.name }}</span>
-        <a href="{{ url_for('logout') }}" class="btn_logout">Выйти</a>
+            <span class="user-name">{{ current_user.name }}</span>
+            <a href="{{ url_for('profile') }}" class="btn-profile">Профиль</a>
         {% else %}
-        <a href="{{ url_for('login') }}" class="btn_reg">Войти</a>
+            <a href="{{ url_for('login') }}" class="btn_reg">Войти</a>
         {% endif %}
     </div>
 </div>
@@ -55,16 +55,17 @@
     <div class="col-md6 border rounded">
         <h2>{{item.title}}</h2>
         {% if item.name_photo_main %}
-        <img class="single-photo" src="{{ url_for('static', filename='images/' + item.name_photo_main) }}" alt="Фото">
+            <img class="single-photo" src="{{ url_for('static', filename='images/' + item.name_photo_main) }}" alt="Фото">
         {% endif %}
-        <div><b>Описание места:</b> {{item.description}}</div>
-        <div><b>Категория места:</b> {{item.category}}</div>
-        <div><b>Часы работы:</b> {{item.opening_hours}}</div>
-        <div><b>Адрес места:</b> {{item.address}}</div>
-        <form action="/place" method="GET">
-            <input type="hidden" name="id" value="{{ item.id }}">
-            <button class="btn">Подробнее</button>
-        </form>
+            <div><b>Описание места:</b> {{item.description}}</div>
+            <div><b>Категория места:</b> {{item.category}}</div>
+            <div><b>Часы работы:</b> {{item.opening_hours}}</div>
+            <div><b>Адрес места:</b> {{item.address}}</div>
+            <form action="/place" method="GET">
+                <input type="hidden" name="id" value="{{ item.id }}">
+                <button class="btn">Подробнее</button>
+            </form>
+
     </div>
     {% endfor %}
 </div>
