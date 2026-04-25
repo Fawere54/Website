@@ -71,6 +71,25 @@
     font-weight: bold;
 }
 
+.place-card {
+    position: relative;
+}
+
+.favorite-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    color: #e74c3c;
+    font-size: 1.5rem;
+    z-index: 10;
+    transition: transform 0.2s;
+}
+
+.favorite-btn:hover {
+    transform: scale(1.1);
+    color: #c0392b;
+}
+
 /* Дополнительно для страницы профиля */
 .user-avatar {
     background-color: #ecf0f1;

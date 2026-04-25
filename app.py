@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, request
+from flask import Flask, render_template, redirect, url_for, request, jsonify
 from flask_login import LoginManager, login_user, login_required, current_user, logout_user
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField
@@ -45,6 +45,7 @@ def main():
         query = query.order_by(Places.id)
 
     places = query.all()
+    db_sess.close()
     return render_template('place.html', places=places)
 
 
@@ -61,7 +62,8 @@ def show_place():
     if int(tme) >= place.open_hour and int(tme) < place.close_hour:
         tr_tme = True
     elif place.open_hour > place.close_hour:
-        if (int(tme) + 24 - place.open_hour) >= 0 and (int(tme) + 24 - place.open_hour) < (place.close_hour + 24 - place.open_hour):
+        if (int(tme) + 24 - place.open_hour) >= 0 and (int(tme) + 24 - place.open_hour) < (
+                place.close_hour + 24 - place.open_hour):
             tr_tme = True
         else:
             tr_tme = False
@@ -71,25 +73,19 @@ def show_place():
     if not place:
         return "Место не найдено", 404
 
+    db_sess.close()
     return render_template('places_details.html', place=place, tme=tr_tme)
+
 
 @app.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', user=current_user, title='Мой профиль')
+    db_sess = db_session.create_session()
+    fav_ids = current_user.favorites.split(',') if current_user.favorites else []
+    favorite_places = db_sess.query(Places).filter(Places.id.in_(fav_ids)).all() if fav_ids else []
 
+    return render_template('profile.html', favorite_places=favorite_places)
 
-@app.route('/like_place/<int:place_id>', methods=['POST'])
-@login_required
-def like_place(place_id):
-    liked = json.loads(current_user.liked_places) if current_user.liked_places else []
-    if place_id in liked:
-        liked.remove(place_id)
-    else:
-        liked.append(place_id)
-    current_user.liked_places = json.dumps(liked)
-    db.session.commit()
-    return redirect(request.referrer or url_for('main'))
 
 @app.route('/registration', methods=['GET', 'POST'])
 def registration():
@@ -144,6 +140,32 @@ def load_user(user_id):
 def logout():
     logout_user()
     return redirect('/')
+
+
+@app.route('/add_to_favorites/<int:place_id>')
+@login_required
+def add_to_favorites(place_id):
+    db_sess = db_session.create_session()
+    user = db_sess.query(User).get(current_user.id)
+    fav_list = user.favorites.split(',') if user.favorites else []
+    pid = str(place_id)
+
+    if pid in fav_list:
+        fav_list.remove(pid)
+        status = "removed"
+    else:
+        fav_list.append(pid)
+        status = "added"
+
+    user.favorites = ",".join(filter(None, fav_list))
+    db_sess.commit()
+    db_sess.close()
+    return jsonify({"status": status, "place_id": place_id})
+
+
+@app.teardown_appcontext
+def shutdown_session(exception=None):
+    db_session.create_session().close()
 
 
 if __name__ == '__main__':
