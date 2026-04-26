@@ -165,3 +165,4 @@ def add_to_favorites(place_id):
 if __name__ == '__main__':
     db_session.global_init("db/places.db")
     app.run(port=8080, host='0.0.0.0')
+

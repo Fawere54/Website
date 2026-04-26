@@ -2,7 +2,6 @@ from data.places import Places
 from data import db_session
 from flask import Flask
 
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'qwerty_zcvbn'
 
@@ -22,7 +21,6 @@ def add():
     name_phot_main = input("Напишите ТОЧНОЕ название главного фото в папке static/images: ")
     name_phot_1 = input("Напишите ТОЧНОЕ название 1-ого фото в папке static/images: ")
     name_phot_2 = input("Напишите ТОЧНОЕ название 2-ого фото в папке static/images: ")
-
 
     o = input("Точно хотите добавить? (da/no): ")
 

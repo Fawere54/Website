@@ -38,7 +38,8 @@
                         <div>
                             <div class="fw-bold" style="font-size: 14px;">{{ place.title }}</div>
                         </div>
-                        <a href="/place?id={{ place.id }}" class="btn btn-sm btn-outline-primary" style="font-size: 12px; border-radius: 20px;">Открыть</a>
+                        <a href="/place?id={{ place.id }}" class="btn btn-sm btn-outline-primary"
+                           style="font-size: 12px; border-radius: 20px;">Открыть</a>
                     </div>
                     {% else %}
                     <p class="text-muted small ps-2">Список пуст</p>
@@ -47,7 +48,8 @@
             </div>
 
             <div class="actions border-top pt-4 text-center">
-                <a href="{{ url_for('logout') }}" class="btn_logout" style="color: #ff4d4d; text-decoration: none; font-weight: 500;">
+                <a href="{{ url_for('logout') }}" class="btn_logout"
+                   style="color: #ff4d4d; text-decoration: none; font-weight: 500;">
                     Выйти из аккаунта
                 </a>
             </div>
