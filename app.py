@@ -80,11 +80,10 @@ def show_place():
 @app.route('/profile')
 @login_required
 def profile():
-    db_sess = db_session.create_session()
-    fav_ids = current_user.favorites.split(',') if current_user.favorites else []
-    favorite_places = db_sess.query(Places).filter(Places.id.in_(fav_ids)).all() if fav_ids else []
-
-    return render_template('profile.html', favorite_places=favorite_places)
+    with db_session.create_session() as db_sess:
+        fav_ids = current_user.favorites.split(',') if current_user.favorites else []
+        favorite_places = db_sess.query(Places).filter(Places.id.in_(fav_ids)).all() if fav_ids else []
+        return render_template('profile.html', favorite_places=favorite_places)
 
 
 @app.route('/registration', methods=['GET', 'POST'])
@@ -131,8 +130,8 @@ def login():
 
 @login_manager.user_loader
 def load_user(user_id):
-    db_sess = db_session.create_session()
-    return db_sess.query(User).get(int(user_id))
+    with db_session.create_session() as db_sess:
+        return db_sess.query(User).get(int(user_id))
 
 
 @app.route('/logout')
@@ -163,11 +162,7 @@ def add_to_favorites(place_id):
     return jsonify({"status": status, "place_id": place_id})
 
 
-@app.teardown_appcontext
-def shutdown_session(exception=None):
-    db_session.create_session().close()
-
-
 if __name__ == '__main__':
     db_session.global_init("db/places.db")
     app.run(port=8080, host='0.0.0.0')
+
