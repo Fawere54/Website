@@ -89,7 +89,19 @@
                     <div class="mb-2 small text-muted"><b>Описание:</b> {{item.description[:100]}}...</div>
                     <div class="mb-2"><b>Часы работы:</b> {{item.opening_hours}}</div>
                     <div class="mb-3 small"><b>Адрес:</b> {{item.address}}</div>
-
+                    <div class="mb-2">
+                        <b>Рейтинг:</b>
+                        {% set avg, count = ratings.get(item.id, (0,0)) %}
+                        <span class="rating-value">{{ "%.1f"|format(avg) }}</span>
+                        <span class="rating-stars">
+                            {% for i in range(1,6) %}
+                                {% if i <= avg|round(0,'floor') %}★
+                                {% elif avg - (avg|round(0,'floor')) >= 0.5 and i == (avg|round(0,'floor'))+1 %}½
+                                {% else %}☆{% endif %}
+                            {% endfor %}
+                        </span>
+                        <span class="reviews-count">({{ count }} {{ 'отзыв' if count %10==1 and count%100!=11 else 'отзыва' if count%10 in (2,3,4) and not (count%100 in (12,13,14)) else 'отзывов' }})</span>
+                    </div>
                     <div class="mt-auto">
                         <form action="/place" method="GET">
                             <input type="hidden" name="id" value="{{ item.id }}">
