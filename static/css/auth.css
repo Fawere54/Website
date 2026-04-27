@@ -22,6 +22,16 @@
     .login-btn {
         padding: 10px; /* Компактная кнопка */
     }
+
+    .slider-img {
+        height: 250px;
+    }
+    .reviews-grid {
+        grid-template-columns: 1fr;
+    }
+    .section-title {
+     font-size: 1.5rem;
+    }
 }
 
 /* Обнуляем отступы, чтобы картинка была на весь экран */
