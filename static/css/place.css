@@ -563,3 +563,100 @@
     gap: 10px;
 }
 
+/* Контейнер для слайдера с двумя фотографиями */
+.gallery-slider {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    background-color: #f1f1f1;
+}
+
+/* Изображение в слайдере */
+.slider-img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.recent-reviews {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 15px;
+}
+.section-title {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 25px;
+    color: #2c3e50;
+    border-left: 5px solid #3498db;
+    padding-left: 15px;
+}
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 25px;
+}
+.review-card {
+    background: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 16px;
+    padding: 18px;
+    transition: 0.2s;
+}
+.review-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.user-info i {
+    color: #3498db;
+}
+.user-name {
+    font-weight: 600;
+    color: #2c3e50;
+}
+.review-rating {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.review-body p {
+    color: #555;
+    line-height: 1.4;
+    font-size: 0.9rem;
+    margin: 10px 0;
+}
+.review-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 12px;
+    font-size: 0.8rem;
+    border-top: 1px solid #eee;
+    padding-top: 10px;
+}
+.place-link {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 500;
+}
+.place-link:hover {
+    text-decoration: underline;
+}
+.review-date {
+    color: #7f8c8d;
+}
