@@ -1,38 +1,105 @@
 {% block content %}
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
-          crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/place.css') }}"/>
-    <title>Places in Cheboksary</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+  integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+  crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/place.css') }}" />
+  <title>Places in Cheboksary</title>
 </head>
 <body>
-<div class="places">
+  <div class="places">
     <div class="col-md6 border rounded">
-        <a href="/" class="btn-back"> ← Назад</a>
-        <h1 style="text-align: center">{{place.title}}</h1>
-        {% if place.name_photo_1 and place.name_photo_2 %}
-        <div class="photo-row">
-            <img src="{{ url_for('static', filename='images/' + place.name_photo_1) }}" alt="Фото 1">
-            <img src="{{ url_for('static', filename='images/' + place.name_photo_2) }}" alt="Фото 2">
-        </div>
-        {% elif place.name_photo_1 and not place.name_photo_2 %}
-        <img class="single-photo" src="{{ url_for('static', filename='images/' + place.name_photo_1) }}" alt="Фото">
-        {% endif %}
-        <div><b>Описание места:</b> {{place.deprecation_full}}</div>
-        {% if tme %}
+      <a href="/" class="btn-back"> ← Назад</a>
+      <h1 style="text-align: center; padding-left: 80px; padding-right: 80px;">{{place.title}}</h1>
+      {% if place.name_photo_1 and place.name_photo_2 %}
+      <div class="gallery-slider">
+          <img id="sliderImage" class="slider-img" src="{{ url_for('static', filename='images/' + place.name_photo_1) }}" alt="{{ place.title }}">
+      </div>
+      <script>
+          const photos = [
+              "{{ url_for('static', filename='images/' + place.name_photo_1) }}",
+              "{{ url_for('static', filename='images/' + place.name_photo_2) }}"
+          ];
+          let currentIndex = 0;
+          const img = document.getElementById('sliderImage');
+          function changePhoto() {
+              currentIndex = (currentIndex + 1) % photos.length;
+              img.style.opacity = '0';
+              setTimeout(() => {
+                  img.src = photos[currentIndex];
+                  img.style.opacity = '1';
+              }, 500);
+          }
+          let interval = setInterval(changePhoto, 3000);
+          const container = document.querySelector('.gallery-slider');
+          container.addEventListener('mouseenter', () => clearInterval(interval));
+          container.addEventListener('mouseleave', () => {
+              interval = setInterval(changePhoto, 3000);
+          });
+      </script>
+      {% elif place.name_photo_1 %}
+          <img class="single-photo" src="{{ url_for('static', filename='images/' + place.name_photo_1) }}" alt="{{ place.title }}">
+      {% endif %}
+      <div><b>Описание места:</b> {{place.deprecation_full}}</div>
+      {% if tme %}
         <div><b>Часы работы:</b> {{place.opening_hours}} (<span style="color: #00ff00">Открыто</span>)</div>
-        {% else %}
+      {% else %}
         <div><b>Часы работы:</b> {{place.opening_hours}} (<span style="color: #ff0000">Закрыто</span>)</div>
-        {% endif %}
-        <div><b>Адрес места:</b> {{place.address}}</div>
-        <div><b>Местоположение на карте:</b> <a href="{{place.link_map}}">Перейти</a></div>
+      {% endif %}
+      <div><b>Адрес места:</b> {{place.address}}</div>
+      <div><b>Местоположение на карте:</b> <a href="{{place.link_map}}">Перейти</a></div>
+      <h3>Отзывы</h3>
+      {% if current_user.is_authenticated %}
+          <div class="add-review-form">
+              <form action="{{ url_for('add_review', place_id=place.id) }}" method="post">
+                  {{ form.hidden_tag() }}
+                  <p>
+                      {{ form.text.label }}<br>
+                      {{ form.text(rows=3, class="form-control") }}
+                      {% for error in form.text.errors %}
+                          <span class="text-danger">{{ error }}</span>
+                      {% endfor %}
+                  </p>
+                  <p>
+                      {{ form.rating.label }}<br>
+                      {{ form.rating(class="form-control", min=1, max=5) }}
+                      {% for error in form.rating.errors %}
+                          <span class="text-danger">{{ error }}</span>
+                      {% endfor %}
+                  </p>
+                  <p>{{ form.submit(class="btn btn-primary") }}</p>
+              </form>
+          </div>
+      {% else %}
+          <p>Чтобы оставить отзыв, <a href="{{ url_for('login') }}">войдите</a>.</p>
+      {% endif %}
+
+      <div class="reviews-list">
+          {% for review in reviews %}
+              <div class="review-item">
+                  <b>{{ review.user_name }}</b>
+                  <span class="rating">
+                      {% for i in range(1, 6) %}
+                          {% if i <= review.rating %}
+                              ★
+                          {% else %}
+                              ☆
+                          {% endif %}
+                      {% endfor %}
+                  </span>
+                  <small>{{ review.created_date.strftime('%d.%m.%Y %H:%M') }}</small>
+                  <p>{{ review.text }}</p>
+              </div>
+          {% else %}
+              <p>Пока нет отзывов. Будьте первым!</p>
+          {% endfor %}
+      </div>
     </div>
-</div>
+  </div>
 </body>
 </html>
 {% endblock %}
